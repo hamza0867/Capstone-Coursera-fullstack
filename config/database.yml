@@ -1,0 +1,23 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  user: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  host: <%= ENV['POSTGRES_HOST'] %>
+
+
+development:
+  <<: *default
+  database: Capstone_development
+
+test:
+  <<: *default
+  database: Capstone_test
+
+production:
+  <<: *default
+  database: Capstone_production
+  username: Capstone
+  password: <%= ENV['CAPSTONE_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
