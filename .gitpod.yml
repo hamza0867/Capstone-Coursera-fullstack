@@ -1,1 +1,2 @@
-image: gitpod/workspace-postgres
+image:
+    file: .gitpod.dockerfile
