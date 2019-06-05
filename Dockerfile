@@ -7,7 +7,7 @@ RUN sudo apt-get update \
  && sudo apt-get install -y mongodb-org \
  && sudo apt-get clean \
  && sudo rm -rf /var/cache/apt/* /var/lib/apt/lists/* /tmp/*
-RUN echo '#Unit contains the dependencies to be satisfied before the service is started.\n\
+RUN sudo echo '#Unit contains the dependencies to be satisfied before the service is started.\n\
 [Unit]\n\
 Description=MongoDB Database\n\
 After=network.target\n\
