@@ -8,5 +8,4 @@ RUN sudo apt-get update \
  && sudo apt-get clean \
  && sudo rm -rf /var/cache/apt/* /var/lib/apt/lists/* /tmp/*
 RUN sudo mkdir -p /data/db
-RUN sudo chown -R mongodb /data/db
-RUN sudo chgrp -R mongodb /data/db
+RUN sudo chown mongodb:mongodb -R /data/db
