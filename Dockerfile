@@ -23,4 +23,4 @@ RUN sudo apt-get update \
 # # `multi-user.target` means the server will be automatically started during boot.\n\
 # [Install]\n\
 # WantedBy=multi-user.target' > /etc/systemd/system/mongodb.service
-RUN systemctl daemon-reload && systemctl start mongodb
+RUN sudo service mongod start
