@@ -9,3 +9,7 @@ RUN sudo apt-get update \
  && sudo rm -rf /var/cache/apt/* /var/lib/apt/lists/* /tmp/*
 RUN sudo mkdir -p /data/db
 RUN sudo chown gitpod:gitpod -R /data/db
+# Install dependencies for this project
+# Install the right ruby version
+RUN rvm install ruby-2.6.0
+RUN gem install bundle
