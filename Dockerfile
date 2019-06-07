@@ -11,4 +11,4 @@ RUN sudo mkdir -p /data/db
 RUN sudo chown gitpod:gitpod -R /data/db
 # Install dependencies for this project
 # Install the right ruby/bundle version
-RUN bash -lc "rvm install ruby-2.6.0 && gem install bundler -v 2"
+RUN bash -lc "rvm install ruby-2.6.0 && gem install bundler -v 2.0.1"

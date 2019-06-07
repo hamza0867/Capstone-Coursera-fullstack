@@ -9,6 +9,8 @@ gem 'puma', '~> 3.11'
 gem 'jbuilder', '~> 2.5'
 gem "rspec-rails", "~> 3.8"
 gem 'mongoid'
+gem "httparty", "~> 0.17.0"
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
@@ -38,5 +40,8 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
+group :production do
+  gem "rails_12factor", "~> 0.0.3"
+end
 
 
