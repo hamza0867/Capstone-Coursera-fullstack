@@ -11,6 +11,6 @@ RUN sudo mkdir -p /data/db
 RUN sudo chown gitpod:gitpod -R /data/db
 # Install dependencies for this project
 # Install the right ruby/bundle version
-RUN bash -lc "rvm install ruby-2.6.0 && gem install bundler -v 2.0.1" && mongod
+RUN bash -lc "rvm install ruby-2.6.0 && gem install bundler -v 2.0.1" && mongod &
 RUN sudo apt install snapd
 RUN sudo service snapd start && sudo snap install heroku --classic
