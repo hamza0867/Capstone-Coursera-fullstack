@@ -5,12 +5,14 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.1'
 
+gem 'httparty', '~> 0.17.0'
 gem 'jbuilder', '~> 2.5'
 gem 'mongoid'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
 gem 'rails', '~> 5.2.2'
 gem 'rspec-rails', '~> 3.8'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
@@ -45,9 +47,13 @@ gem 'jquery-rails', '~> 4.3'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '~> 4.1'
 
+group :production do
+  gem 'rails_12factor', '~> 0.0.3'
+end
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-angular'
-  gem 'rails-assets-angular-ui-router'
-  gem 'rails-assets-angular-resource'
   gem 'rails-assets-angular-material'
+  gem 'rails-assets-angular-resource'
+  gem 'rails-assets-angular-ui-router'
 end
