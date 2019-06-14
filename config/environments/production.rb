@@ -87,4 +87,7 @@ Rails.application.configure do
 
   # uglifying js files
   config.assets.js_compressor = :uglifier
+
+  # uglifying css files
+  config.assets.css_compressor = :sass
 end
