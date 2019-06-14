@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.1'
 
-gem 'rails', '~> 5.2.2'
+gem 'jbuilder', '~> 2.5'
+gem 'mongoid'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
-gem 'jbuilder', '~> 2.5'
-gem "rspec-rails", "~> 3.8"
-gem 'mongoid'
+gem 'rails', '~> 5.2.2'
+gem 'rspec-rails', '~> 3.8'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
@@ -28,7 +30,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end
 
 group :development do
@@ -38,5 +40,14 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
+gem 'coffee-rails', '~> 5.0'
+gem 'jquery-rails', '~> 4.3'
+gem 'sass-rails', '~> 5.0'
+gem 'uglifier', '~> 4.1'
 
-
+source 'https://rails-assets.org' do
+  gem 'rails-assets-angular'
+  gem 'rails-assets-angular-ui-router'
+  gem 'rails-assets-angular-resource'
+  gem 'rails-assets-angular-material'
+end
