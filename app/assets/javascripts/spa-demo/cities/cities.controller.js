@@ -26,7 +26,7 @@
     }
 
     function handleError(err) {
-      console.warn(err);
+      console.error(err);
     }
 
     function edit(object) {
