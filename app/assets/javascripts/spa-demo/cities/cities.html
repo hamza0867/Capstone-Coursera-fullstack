@@ -1,0 +1,28 @@
+<div>
+  <h3>Cities</h3>
+  <span>(from spa-demo/cities/cities.html)</span>
+
+  <md-content layout-padding>
+    <form layout="column" layout-align="start start">
+      <div layout="row" layout-align="start center">
+      <md-input-container>
+        <label>Name</label>
+        <input type="text" name="name" ng-model="citiesVM.city.name" required/>
+      </md-input-container>
+      <md-button class="md-raised md-primary" ng-if="!citiesVM.city.id" type="submit" ng-click="citiesVM.create()">Create City</md-button>
+      </div>
+      <div layout="row" ng-if="citiesVM.city.id">
+        <md-button flex="30" class="md-raised md-primary"  ng-click="citiesVM.update()">Update</md-button>
+        <md-button flex="30" class="md-raised md-warn"  ng-click="citiesVM.remove()">Delete</md-button>
+      </div>
+
+    </form>
+  </md-content>
+
+  <md-list flex>
+    <md-list-item ng-repeat="city in citiesVM.cities | orderBy:'name'">
+      <md-button class="md-primary" ng-click="citiesVM.edit(city)">{{ city.name }}</md-button>
+    </md-list-item>
+  </md-list>
+
+</div>

@@ -17,3 +17,8 @@
 //= require spa-demo/foos/foos.service
 //= require spa-demo/foos/foos.controller
 //= require spa-demo/foos/foos.directive
+//
+//= require spa-demo/cities/cities.module
+//= require spa-demo/cities/cities.service
+//= require spa-demo/cities/cities.controller
+//= require spa-demo/cities/cities.directive

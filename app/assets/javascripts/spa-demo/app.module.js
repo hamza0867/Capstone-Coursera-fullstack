@@ -4,6 +4,7 @@
     'ui.router',
     'ngMaterial',
     'ngMessages',
-    'spa-demo.foos'
+    'spa-demo.foos',
+    'spa-demo.cities'
   ]);
 })();
