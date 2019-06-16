@@ -86,7 +86,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # uglifying js files
-  config.assets.js_compressor = :uglifier
+  config.assets.js_compressor = Uglifier.new(harmony: true)
 
   # uglifying css files
   config.assets.css_compressor = :sass
