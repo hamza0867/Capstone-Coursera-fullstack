@@ -1,0 +1,25 @@
+(function() {
+  'use strict';
+  angular.module('spa-demo.foos').directive('sdFoos', FoosDirective);
+
+  FoosDirective.$inject = ['spa-demo.APP_CONFIG'];
+
+  function FoosDirective(APP_CONFIG) {
+    const ddo = {
+      templateUrl: APP_CONFIG.foos_html,
+      replace: true,
+      bindToController: true,
+      controller: 'spa-demo.foos.FoosController',
+      controllerAs: 'foosVM',
+      restrict: 'E',
+      scope: {},
+      link: link
+    };
+
+    return ddo;
+
+    function link(scope, element, attrs) {
+      console.log('FoosDirective', scope);
+    }
+  }
+})();

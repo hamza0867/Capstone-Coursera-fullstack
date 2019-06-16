@@ -1,0 +1,28 @@
+<div>
+  <h3>Foos</h3>
+  <span>(from spa-demo/foos/foos.html)</span>
+
+  <md-content layout-padding>
+    <form layout="column" layout-align="start start">
+      <div layout="row" layout-align="start center">
+      <md-input-container>
+        <label>Name</label>
+        <input type="text" name="name" ng-model="foosVM.foo.name" required/>
+      </md-input-container>
+      <md-button class="md-raised md-primary" ng-if="!foosVM.foo.id" type="submit" ng-click="foosVM.create()">Create Foo</md-button>
+      </div>
+      <div layout="row" ng-if="foosVM.foo.id">
+        <md-button flex="30" class="md-raised md-primary"  ng-click="foosVM.update()">Update</md-button>
+        <md-button flex="30" class="md-raised md-warn"  ng-click="foosVM.remove()">Delete</md-button>
+      </div>
+
+    </form>
+  </md-content>
+
+  <md-list flex>
+    <md-list-item ng-repeat="foo in foosVM.foos | orderBy:'name'">
+      <md-button class="md-primary" ng-click="foosVM.edit(foo)">{{ foo.name }}</md-button>
+    </md-list-item>
+  </md-list>
+
+</div>
