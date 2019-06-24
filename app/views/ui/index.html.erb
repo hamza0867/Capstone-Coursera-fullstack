@@ -2,20 +2,18 @@
 <html lang="en" ng-app="spa-demo">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <%= stylesheet_link_tag "spa-demo", media: "all" %>
     <%= javascript_include_tag "spa-demo" %>
   </head>
   <body>
     <div layout="row" layout-align="center">
-      <div flex></div>
-      <div flex-gt-md="70" >
+      <div flex-gt-sm="70" flex >
         <h1>Hello</h1>
         <span>(from app/views/ui/index.html.erb)</span>
         <div ui-view></div>
       </div>
-      <div flex></div>
     </div>
   </body>
 </html>

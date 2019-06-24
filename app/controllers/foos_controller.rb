@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+# Foo controller
 class FoosController < ApplicationController
-  before_action :set_foo, only: [:show, :update, :destroy]
+  before_action :set_foo, only: %i[show update destroy]
 
   # GET /foos
   # GET /foos.json
@@ -9,8 +12,7 @@ class FoosController < ApplicationController
 
   # GET /foos/1
   # GET /foos/1.json
-  def show
-  end
+  def show; end
 
   # POST /foos
   # POST /foos.json
@@ -41,13 +43,14 @@ class FoosController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_foo
-      @foo = Foo.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def foo_params
-      params.require(:foo).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_foo
+    @foo = Foo.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def foo_params
+    params.require(:foo).permit(:name)
+  end
 end
