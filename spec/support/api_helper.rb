@@ -4,6 +4,12 @@ module ApiHelper
   def parsed_body
     JSON.parse(response.body)
   end
+
+  def signup(registration, status = :ok)
+    post user_registration_path, params: registration.to_json,
+                                 headers: { 'Content-Type' => 'application/json' }
+    expect(response).to have_http_status(status)
+  end
 end
 
 RSpec.shared_examples 'resource index' do |model|
@@ -51,7 +57,7 @@ RSpec.shared_examples 'create resource' do |model|
   let(:resource_id)    { payload['id'] }
 
   it "can create valid #{model}" do
-    post send("#{model}s_path"), params: resource_state.to_json,\
+    post send("#{model}s_path"), params: resource_state.to_json,
                                  headers: { 'Content-Type' => 'application/json' }
     expect(response).to have_http_status(:created)
     expect(response.content_type).to eq('application/json')

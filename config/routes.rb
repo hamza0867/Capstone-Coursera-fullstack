@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :states
+  mount_devise_token_auth_for 'User', at: 'auth'
+
   scope :api, defaults: { format: :json } do
     resources :foos, :bars
     resources :cities

@@ -2,6 +2,9 @@
 
 # class
 class ApplicationController < ActionController::API
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
+  include DeviseTokenAuth::Concerns::SetUserByToken
   include ActionController::ImplicitRender
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from Mongoid::Errors::DocumentNotFound, with: :not_found
@@ -19,5 +22,9 @@ class ApplicationController < ActionController::API
 
     render json: payload, status: :not_found
     Rails.logger.debug exception
+  end
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
   end
 end

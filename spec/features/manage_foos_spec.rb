@@ -1,12 +1,16 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'support/foo_ui_helper'
 
 feature 'ManageFoos', type: :feature, js: true do
   include_context 'db_cleanup_each'
+  include FooUiHelper
   FOO_FORM_CSS = 'body > div > div > div > div > div > md-content > form'
-  FOO_FORM_XPATH = '//h3[text()="Foos"]/../md-content/form'
-  FOO_LIST_XPATH = '//h3[text()="Foos"]/../md-list'
+  FOO_FORM_XPATH = FooUiHelper::FOO_FORM_XPATH
+  FOO_LIST_XPATH = FooUiHelper::FOO_LIST_XPATH
+
+  let(:foo_state) { FactoryGirl.attributes_for(:foo) }
 
   feature 'view existing foos' do
     let(:foos) { (1..5).map { FactoryGirl.create(:foo) }.sort_by { |v| v['name'] } }
@@ -43,11 +47,18 @@ feature 'ManageFoos', type: :feature, js: true do
       expect(page).to have_css("button[ng-click*='create()']", text: 'Create Foo'.upcase)
       expect(page).to have_button('Create Foo')
     end
-    scenario 'complete form'
+    scenario 'complete form helper' do
+      create_foo foo_state
+    end
   end
 
   feature 'with existing Foo' do
-    scenario 'can be updated'
-    scenario 'can be deleted'
+    let(:foos) { (1..5).map { FactoryGirl.create(:foo) }.sort_by { |v| v['name'] } }
+    scenario 'can be updated' do
+      update_foo foos[2].name, 'Awesome'
+    end
+    scenario 'can be deleted' do
+      delete_foo foos[1].name
+    end
   end
 end
