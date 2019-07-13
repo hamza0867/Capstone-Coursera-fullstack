@@ -8,10 +8,14 @@
 //= require angular-animate
 //= require angular-aria
 //= require angular-messages
+//= require angular-cookie
+//= require ng-token-auth
 //
 //= require spa-demo/app.module
 //= require spa-demo/app.router
 //= require spa-demo/app.constant
+//
+//= require spa-demo/authn/authn.module
 //
 //= require spa-demo/foos/foos.module
 //= require spa-demo/foos/foos.service

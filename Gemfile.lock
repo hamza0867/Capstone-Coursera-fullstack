@@ -169,6 +169,8 @@ GEM
       rails-assets-angular (= 1.7.8)
     rails-assets-angular-aria (1.7.8)
       rails-assets-angular (= 1.7.8)
+    rails-assets-angular-cookie (4.1.0)
+      rails-assets-angular
     rails-assets-angular-material (1.1.18)
       rails-assets-angular
       rails-assets-angular-animate
@@ -180,6 +182,9 @@ GEM
       rails-assets-angular (= 1.7.8)
     rails-assets-angular-ui-router (1.0.20)
       rails-assets-angular (>= 1.2.0)
+    rails-assets-ng-token-auth (0.0.27)
+      rails-assets-angular (>= 1.2.0)
+      rails-assets-angular-cookie (>= 4.0.6)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -224,7 +229,7 @@ GEM
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.2)
-    rubocop (0.71.0)
+    rubocop (0.72.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.6)
@@ -253,7 +258,7 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
-    solargraph (0.34.0)
+    solargraph (0.34.2)
       backport (~> 1.1)
       bundler (>= 1.17.2)
       htmlentities (~> 4.3, >= 4.3.4)
@@ -292,7 +297,7 @@ GEM
     websocket-extensions (0.1.4)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    yard (0.9.19)
+    yard (0.9.20)
 
 PLATFORMS
   ruby
@@ -315,15 +320,17 @@ DEPENDENCIES
   puma (~> 3.11)
   rails (~> 5.2.2)
   rails-assets-angular!
+  rails-assets-angular-cookie!
   rails-assets-angular-material!
   rails-assets-angular-resource!
   rails-assets-angular-ui-router!
+  rails-assets-ng-token-auth!
   rails_12factor (~> 0.0.3)
   rspec-rails (~> 3.8)
   sass-rails (~> 5.0)
   selenium-webdriver (~> 3.142)
   simplecov (~> 0.16.1)
-  solargraph (>= 0.34)
+  solargraph (>= 0.34.2)
   spring
   spring-watcher-listen (~> 2.0.0)
   uglifier (~> 4.1)

@@ -55,4 +55,71 @@ RSpec.describe 'Authentication Api', type: :request do
       end
     end
   end
+
+  context 'anonymous user' do
+    it 'accesses unprotected' do
+      get authn_whoami_path
+      expect(response).to have_http_status(:ok)
+
+      expect(parsed_body).to eq({})
+    end
+    it 'fails to access protected resource' do
+      get authn_checkme_path
+      expect(response).to have_http_status(:unauthorized)
+
+      expect(parsed_body).to include('errors' =>
+                                     ['You need to sign in or sign up before continuing.'])
+    end
+  end
+
+  context 'login' do
+    let(:account) { signup user_props }
+    let!(:user) { login account }
+
+    context 'valid user login' do
+      it 'generates access token' do
+        expect(response.headers['uid']).to eq(account[:uid])
+        expect(response.headers).to include('access-token')
+        expect(response.headers).to include('client')
+        expect(response.headers['token-type']).to eq('Bearer')
+      end
+
+      it 'extracts access headers' do
+        expect(access_tokens?).to be true
+        expect(access_tokens['uid']).to eq(account[:uid])
+        expect(access_tokens).to include('access-token')
+        expect(access_tokens).to include('client')
+        expect(access_tokens['token-type']).to eq('Bearer')
+      end
+
+      it 'grants access to resource' do
+        get authn_checkme_path, headers: access_tokens
+        expect(response).to have_http_status(:ok)
+
+        payload = parsed_body
+        expect(payload['id']).to eq(account[:id])
+        expect(payload['uid']).to eq(account[:uid])
+      end
+
+      it 'grants access to resource multiple times' do
+        10.times do
+          get authn_checkme_path, headers: access_tokens
+          expect(response).to have_http_status(:ok)
+        end
+      end
+
+      it 'logout' do
+        logout
+        expect(access_tokens?).to be_falsey
+        get authn_checkme_path, headers: access_tokens
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context 'invalid password' do
+      it 'rejects credentials' do
+        login account.merge(password: 'badpassword'), :unauthorized
+      end
+    end
+  end
 end

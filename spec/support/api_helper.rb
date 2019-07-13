@@ -5,10 +5,59 @@ module ApiHelper
     JSON.parse(response.body)
   end
 
+  # automates the passing of payload bodies as json
+  %w[post put patch get head delete].each do |http_method_name|
+    define_method("j#{http_method_name}") do |path, params: {}, headers: {}|
+      if %w[post put patch].include? http_method_name
+        headers = headers.merge('content-type' => 'application/json') unless params.empty?
+        params = params.to_json
+      end
+      send(http_method_name,
+           path,
+           params: params,
+           headers: headers.merge(access_tokens))
+    end
+  end
+
   def signup(registration, status = :ok)
-    post user_registration_path, params: registration.to_json,
-                                 headers: { 'Content-Type' => 'application/json' }
+    jpost user_registration_path, params: registration
     expect(response).to have_http_status(status)
+    payload = parsed_body
+    return payload unless response.ok?
+
+    registration.merge(id: payload['data']['id'],
+                       uid: payload['data']['uid'])
+  end
+
+  def login(credentials, status = :ok)
+    post user_session_path,
+         params: credentials.slice(:email, :password).to_json,
+         headers: { 'Content-Type' => 'application/json' }
+    expect(response).to have_http_status(status)
+    response.ok? ? parsed_body['data'] : parsed_body
+  end
+
+  def access_tokens?
+    response.headers['access-token'].present? if response
+  end
+
+  def access_tokens
+    if access_tokens?
+      @last_tokens = %w[uid client token-type access-token].each_with_object({}) { |k, h| h[k] = response.headers[k]; }
+    end
+    @last_tokens || {}
+  end
+
+  def logout(status = :ok)
+    delete destroy_user_session_path, headers: access_tokens
+    @last_tokens = {}
+    expect(response).to have_http_status(status) if status
+  end
+
+  def create_resource(path, factory, status = :created)
+    jpost path, params: FactoryGirl.attributes_for(factory)
+    expect(response).to have_http_status(status) if status
+    parsed_body
   end
 end
 
@@ -17,7 +66,7 @@ RSpec.shared_examples 'resource index' do |model|
   let(:payload) { parsed_body }
 
   it "returns all #{model} instances" do
-    get send("#{model}s_path"), headers: { 'Accept' => 'application/json' }
+    jget send("#{model}s_path")
     expect(response).to have_http_status(:ok)
     expect(response.content_type).to eq('application/json')
 
@@ -32,14 +81,14 @@ RSpec.shared_examples 'show resource' do |model|
   let(:bad_id) { 1_234_567_890 }
 
   it "returns #{model} when using correct ID" do
-    get send("#{model}_path", resource.id)
+    jget send("#{model}_path", resource.id)
     expect(response).to have_http_status(:ok)
     expect(response.content_type).to eq('application/json')
     response_check if respond_to?(:response_check)
   end
 
   it 'returns not found when using incorrect ID' do
-    get send("#{model}_path", bad_id)
+    jget send("#{model}_path", bad_id)
     expect(response).to have_http_status(:not_found)
     expect(response.content_type).to eq('application/json')
 
@@ -57,8 +106,7 @@ RSpec.shared_examples 'create resource' do |model|
   let(:resource_id)    { payload['id'] }
 
   it "can create valid #{model}" do
-    post send("#{model}s_path"), params: resource_state.to_json,
-                                 headers: { 'Content-Type' => 'application/json' }
+    jpost send("#{model}s_path"), params: resource_state
     expect(response).to have_http_status(:created)
     expect(response.content_type).to eq('application/json')
 
@@ -67,15 +115,14 @@ RSpec.shared_examples 'create resource' do |model|
     response_check if respond_to?(:response_check)
 
     # verify we can locate the created instance in DB
-    get send("#{model}_path", resource_id)
+    jget send("#{model}_path", resource_id)
     expect(response).to have_http_status(:ok)
   end
 end
 
 RSpec.shared_examples 'modifiable resource' do |model|
   let(:resource) do
-    post send("#{model}s_path"), params: FactoryGirl.attributes_for(model).to_json,\
-                                 headers: { 'Content-Type' => 'application/json' }
+    jpost send("#{model}s_path"), params: FactoryGirl.attributes_for(model)
     expect(response).to have_http_status(:created)
     parsed_body
   end
@@ -83,21 +130,20 @@ RSpec.shared_examples 'modifiable resource' do |model|
 
   it "can update #{model}" do
     # change to new state
-    put send("#{model}_path", resource['id']), params: new_state.to_json,\
-                                               headers: { 'Content-Type' => 'application/json' }
+    jput send("#{model}_path", resource['id']), params: new_state
     expect(response).to have_http_status(:ok)
 
     update_check if respond_to?(:update_check)
   end
 
   it 'can be deleted' do
-    head send("#{model}_path", resource['id'])
+    jhead send("#{model}_path", resource['id'])
     expect(response).to have_http_status(:ok)
 
-    delete send("#{model}_path", resource['id'])
+    delete send("#{model}_path", resource['id']), headers: access_tokens
     expect(response).to have_http_status(:no_content)
 
-    head send("#{model}_path", resource['id'])
+    jhead send("#{model}_path", resource['id'])
     expect(response).to have_http_status(:not_found)
   end
 end

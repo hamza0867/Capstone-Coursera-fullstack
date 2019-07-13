@@ -8,8 +8,24 @@ class ApplicationController < ActionController::API
   include ActionController::ImplicitRender
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from Mongoid::Errors::DocumentNotFound, with: :not_found
+  rescue_from ActionController::ParameterMissing, with: :send_bad_request
 
   protected
+
+  def full_message_error(full_message, status)
+    payload = {
+      errors: { full_messages: [full_message.to_s] }
+    }
+    render json: payload, status: status
+  end
+
+  def send_bad_request(exception)
+    payload = {
+      errors: { full_messages: [exception.message.to_s] }
+    }
+    render json: payload, status: :bad_request
+    Rails.logger.debug exception.message
+  end
 
   def not_found(exception)
     payload = {

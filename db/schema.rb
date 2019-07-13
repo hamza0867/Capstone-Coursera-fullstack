@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_24_185044) do
+ActiveRecord::Schema.define(version: 2019_07_06_163326) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,34 @@ ActiveRecord::Schema.define(version: 2019_06_24_185044) do
 
   create_table "foos", force: :cascade do |t|
     t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.string "caption"
+    t.integer "creator_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_images_on_creator_id"
+  end
+
+  create_table "thing_images", force: :cascade do |t|
+    t.bigint "image_id", null: false
+    t.bigint "thing_id", null: false
+    t.integer "priority", default: 5, null: false
+    t.integer "creator_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["image_id", "thing_id"], name: "index_thing_images_on_image_id_and_thing_id", unique: true
+    t.index ["image_id"], name: "index_thing_images_on_image_id"
+    t.index ["thing_id"], name: "index_thing_images_on_thing_id"
+  end
+
+  create_table "things", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -46,10 +74,17 @@ ActiveRecord::Schema.define(version: 2019_06_24_185044) do
     t.json "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "thing_images", "images"
+  add_foreign_key "thing_images", "things"
 end
