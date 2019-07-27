@@ -1,0 +1,13 @@
+(function() {
+    'use strict';
+
+    angular.module('spa-demo.config', [])
+      .constant('spa-demo.config.APP_CONFIG', {
+        main_page_html: '<%= asset_path('spa-demo/pages/main.html') %>',
+        server_url: '<%= ENV['RAILS_API_URL'] %>',
+        foos_html: '<%= asset_path('spa-demo/foos/foos.html') %>',
+        cities_html: '<%= asset_path('spa-demo/cities/cities.html') %>',
+        authn_signup_html: '<%= asset_path('spa-demo/authn/signup/signup.html') %>',
+        signup_html: '<%= asset_path('spa-demo/pages/signup.html') %>'
+      });
+})();

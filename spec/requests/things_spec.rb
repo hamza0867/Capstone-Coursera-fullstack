@@ -21,8 +21,8 @@ RSpec.describe 'Things', type: :request do
       expect(response).to have_http_status(:bad_request)
       payload = parsed_body
       expect(payload).to include('errors')
-      expect(payload['errors']).to include('param is missing')
-      expect(payload['errors']).to include('empty: name')
+      expect(payload['errors']).to include('full_messages')
+      expect(payload['errors']['full_messages']).to include('param is missing or the value is empty: name')
     end
 
     it 'create fails' do

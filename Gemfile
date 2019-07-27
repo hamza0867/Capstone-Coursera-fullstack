@@ -47,7 +47,7 @@ end
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
-  gem 'solargraph', '>=0.34.2'
+  gem 'solargraph', '>=0.34.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
@@ -63,7 +63,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-angular-material'
   gem 'rails-assets-angular-resource'
   gem 'rails-assets-angular-ui-router'
-  gem 'rails-assets-ng-token-auth'
+  gem 'rails-assets-ng-token-auth', '>=0.0.30'
 end
 
 gem 'devise_token_auth', '~> 1.1'
