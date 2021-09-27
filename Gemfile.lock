@@ -1,5 +1,4 @@
 GEM
-  remote: https://rubygems.org/
   remote: https://rails-assets.org/
   specs:
     actioncable (5.2.3)
@@ -92,7 +91,6 @@ GEM
     mime-types-data (3.2019.0331)
     mimemagic (0.3.3)
     mini_mime (1.0.1)
-    mini_portile2 (2.4.0)
     minitest (5.11.3)
     mongo (2.8.0)
       bson (>= 4.4.2, < 5.0.0)
@@ -102,8 +100,6 @@ GEM
     msgpack (1.2.10)
     multi_xml (0.6.0)
     nio4r (2.3.1)
-    nokogiri (1.10.3)
-      mini_portile2 (~> 2.4.0)
     pg (1.1.4)
     puma (3.12.1)
     rack (2.0.7)
@@ -209,6 +205,15 @@ GEM
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    mini_portile2 (2.6.1)
+    nokogiri (1.12.5)
+      mini_portile2 (~> 2.6.1)
+      racc (~> 1.4)
+    racc (1.5.2)
 
 PLATFORMS
   ruby
