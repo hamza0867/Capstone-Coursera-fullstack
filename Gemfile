@@ -5,7 +5,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.1'
 
-gem 'httparty', '~> 0.17.0'
+gem 'httparty', '~> 0.21.0'
 gem 'jbuilder', '~> 2.5'
 gem 'mongoid'
 gem 'pg', '>= 0.18', '< 2.0'
